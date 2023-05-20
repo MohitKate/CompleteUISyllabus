@@ -1,0 +1,274 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.18362}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\qc\f0\fs32\lang9 CSS proprocessors\par
+
+\pard\sa200\sl276\slmult1\fs24 CSS preprocessors are scripting languages that extend the default capabilities of CSS. They enable us to use logic in our CSS code, such as variables, nesting, inheritance, mixins, functions, and mathematical operations\par
+EX of css preprocessors  are SCSS,LESS,Stylus.....\fs32\par
+
+\pard\sa200\sl240\slmult1\b\fs24 Disadvantages of CSS:\b0\par
+
+\pard 
+{\pntext\f0 1.\tab}{\*\pn\pnlvlbody\pnf0\pnindent0\pnstart1\pndec{\pntxta.}}
+\fi-360\li720\sl240\slmult1 stylesheets are getting larger\par
+{\pntext\f0 2.\tab}more complex\par
+{\pntext\f0 3.\tab}harder to maintain\fs32\par
+
+\pard\sl240\slmult1\par
+SCSS\par
+=====\par
+\fs24 The watch flag tells Sass to watch your source files for changes, and re-compile CSS each time you save your Sass.\par
+\fs32\par
+\b\fs24\tab sass --watch input.scss output.css\par
+\par
+1.Variables:\par
+\b0 The variables as a way to store information that you want to reuse throughout your stylesheet. You can store things like colors, font stacks, or any CSS value you think you'll want to reuse. Sass uses the '$ ' symbol to make something a variable. Here's an example:\par
+\par
+\b SCSS \b0 :\par
+$font-stack:    Helvetica, sans-serif;\par
+$primary-color: #333;\par
+\par
+body \{\par
+  font: 100% $font-stack;\par
+  color: $primary-color;\par
+\}\par
+\par
+\b CSS:\b0\par
+body \{\par
+  font: 100% Helvetica, sans-serif;\par
+  color: #333;\par
+\}\par
+\par
+2.\b Nesting:\par
+\b0 Sass follows the same visual hierarchy of your HTML.\par
+\par
+\b SCSS:\b0\par
+nav \{\par
+  ul \{\par
+    margin: 0;\par
+    padding: 0;\par
+    list-style: none;\par
+  \}\par
+\par
+  li \{ display: inline-block; \}\par
+\par
+  a \{\par
+    display: block;\par
+    padding: 6px 12px;\par
+    text-decoration: none;\par
+  \}\par
+\}\par
+\par
+\b CSS:\b0\par
+nav ul \{\par
+  margin: 0;\par
+  padding: 0;\par
+  list-style: none;\par
+\}\par
+nav li \{\par
+  display: inline-block;\par
+\}\par
+nav a \{\par
+  display: block;\par
+  padding: 6px 12px;\par
+  text-decoration: none;\par
+\}\par
+\par
+\b\par
+3.Modules:\par
+\b0\par
+You don't have to write all your Sass in a single file. You can split it up however you want with the @use rule. This rule loads another Sass file as a module, which means you can refer to its variables, mixins, and functions in your Sass file with a namespace based on the filename. Using a file will also include the CSS it generates in your compiled output!\par
+\par
+\par
+SCSS:\par
+\par
+\b  _base.scss\par
+\b0\par
+$font-stack:    Helvetica, sans-serif;\par
+$primary-color: #333;\par
+\par
+body \{\par
+  font: 100% $font-stack;\par
+  color: $primary-color;\par
+\}\par
+\par
+\b styles.scss\b0\par
+\par
+@use 'base';\par
+\par
+.inverse \{\par
+  background-color: base.$primary-color;\par
+  color: white;\par
+\}\par
+\par
+\b CSS:\b0\par
+\par
+body \{\par
+  font: 100% Helvetica, sans-serif;\par
+  color: #333;\par
+\}\par
+\par
+.inverse \{\par
+  background-color: #333;\par
+  color: white;\par
+\}\par
+\par
+\b 4.Mixins:\par
+\b0 A mixin lets you make groups of CSS declarations that you want to reuse throughout your site. You can even pass in values to make your mixin more flexible. A good use of a mixin is for vendor prefixes.\par
+\par
+
+\pard\li720\sl240\slmult1\b scss:\par
+\b0\par
+@mixin transform($property) \{\par
+  -webkit-transform: $property;\par
+  -ms-transform: $property;\par
+  transform: $property;\par
+\}\par
+.box \{ @include transform(rotate(30deg)); \}\par
+\par
+\b CSS:\par
+\par
+\b0 .box \{\par
+  -webkit-transform: rotate(30deg);\par
+  -ms-transform: rotate(30deg);\par
+  transform: rotate(30deg);\par
+\}\par
+
+\pard\sl240\slmult1  \b 5.Extend/Inheritance:\b0\par
+ Using @extend lets you share a set of CSS properties from one selector to another.\par
+\par
+/* This CSS will print because %message-shared is extended. */\par
+%message-shared \{\par
+  border: 1px solid #ccc;\par
+  padding: 10px;\par
+  color: #333;\par
+\}\par
+\par
+// This CSS won't print because %equal-heights is never extended.\par
+%equal-heights \{\par
+  display: flex;\par
+  flex-wrap: wrap;\par
+\}\par
+\par
+.message \{\par
+  @extend %message-shared;\par
+\}\par
+\par
+.success \{\par
+  @extend %message-shared;\par
+  border-color: green;\par
+\}\par
+\par
+.error \{\par
+  @extend %message-shared;\par
+  border-color: red;\par
+\}\par
+\par
+.warning \{\par
+  @extend %message-shared;\par
+  border-color: yellow;\par
+\}\par
+\par
+\b 6.Operators:\b0\par
+ass has a handful of standard math operators like +, -, *, /, and %. \par
+\par
+\b SCSS:\b0\par
+.container \{\par
+  width: 100%;\par
+\}\par
+\par
+article[role="main"] \{\par
+  float: left;\par
+  width: 600px / 960px * 100%;\par
+\}\par
+\par
+aside[role="complementary"] \{\par
+  float: right;\par
+  width: 300px / 960px * 100%;\par
+\}\par
+\par
+\b CSS:\par
+\b0 .container \{\par
+  width: 100%;\par
+\}\par
+\par
+article[role="main"] \{\par
+  float: left;\par
+  width: 62.5%;\par
+\}\par
+\par
+aside[role="complementary"] \{\par
+  float: right;\par
+  width: 31.25%;\par
+\}\par
+\par
+\b Differences b/w less and scss:\par
+\par
+
+\pard\li720\sl240\slmult1\b0 1.Sass Is in Ruby While LESS Is in Javascript\par
+2.To Assign Variables, Sass Uses '$' While LESS Uses '@'\par
+3.LESS Has Better Error Messages Than Sass\par
+4.LESS Has More User-Friendly Documentation Than Sass\par
+
+\pard\sl240\slmult1\par
+\b 1.What is Bootstrap?\par
+\b0 Bootstrap is a platform for web development based on a front-end framework. It is used to create exceptional responsive designs using HTML, and CSS. These templates are used for forms, tables, buttons, typography, models, tables, navigation, carousels and images. Bootstrap also has Javascript plugins, which are optional. Bootstrap is mostly preferred for developing mobile web applications.\par
+\par
+\b 2.What are the key components of Bootstrap?\par
+CSS: \b0 It consists of  various CSS files\par
+\b Scaffolding: \b0 It provides a basic structure with the Grid system, link styles, and background\par
+\b Layout Components: \b0 This gives the list of layout components\par
+\b JavaScript Plugins: \b0 It contains many jQuery and JavaScript plugins\par
+\b Customize: \b0 To get your own version of the framework, you can customize your components\par
+\par
+\b 3.Explain some features of Bootstrap?\par
+\par
+\b0 It provides an open-source for use\par
+Bootstrap has Compatibility with all browsers\par
+It has Responsive designs\par
+Easy to use and fast\par
+\par
+\b 4.Normalize.css vs Reset CSS\par
+\par
+Normalize.css  :\par
+\b0 Normalize.css is a small CSS file that provides better cross-browser consistency in the default styling of HTML elements.\par
+It\rquote s a modern, HTML5-ready, alternative to the traditional CSS reset.\par
+\par
+\b Reset CSS :\b0\par
+A CSS Reset (or \ldblquote Reset CSS\rdblquote ) is a short, often compressed (minified) set of CSS rules that resets the styling of all HTML elements to a consistent baseline.\par
+In case you didn\rquote t know, every browser has its own default \lquote user agent\rquote  stylesheet, that it uses to make unstyled websites appear more legible.\par
+\b\par
+5.What is the purpose of using the Scrollspy plugin?\par
+\b0 The purpose of using the Scrollspy\par
+ plugin in Bootstrap is that it allows you to target certain sections of the page based on the scroll position. Thereafter, you can add .active classes, based on the scroll position, to the Bootstrap navbar.\par
+\par
+\b 6.When will you use <code>tag and <pre>tag?\par
+\b0 <code>tag is used to show the code inline and <pre>tag is used to show code with multiple lines.\par
+\par
+\b 7.Define Bootstrap thumbnails.\b0\par
+It is a way to use the layout images, videos, text, etc. in a grid system. We can create thumbnails by adding a tag with the class .thumbnails around the image.\par
+\par
+This will add four pixels of padding and a grey border.\par
+\par
+\b 8.What is a jumbotron in Bootstrap?\b0\par
+It is used to increase the size of headings and to add a lot of margins for landing page content. To create a jumbotron we have to create a container <div> with the class of .jumbotron.\par
+\par
+\b 9.What is grid system?\b0\par
+\par
+The bootstrap 4 grid system has the following five classes:-\par
+\par
+col- (for an extra small devices whose screen width less than 576px)\par
+col-sm- (for a small devices whose screen width equal to or greater than 576px)\par
+col-md- (for a medium devices whose screen width equal to or greater than 768px)\par
+col-lg- (for large devices whose screen width equal to or greater than 992px)\par
+col-xl- (for xlarge devices whose screen width equal to or greater than 1200px)\par
+\par
+
+\pard\sa200\sl276\slmult1\fs22\par
+
+\pard\sl240\slmult1\fs24\par
+\par
+
+\pard\li720\sl240\slmult1\par
+\par
+}
+ 
